@@ -1,0 +1,33 @@
+{
+  "$comment": "Boot selector builds. `url` entries are filled in by the release workflow; relative paths are resolved against this file's directory.",
+  "version": "0.1.0",
+  "layouts": [
+    {
+      "id": "2slot",
+      "name": "2 slots of 6 MiB (default, fits two full size firmwares)",
+      "slots": 2,
+      "slotSize": 6291456,
+      "bootloader": "selector/0.1.0/bootloader.bin",
+      "partitionTable": "selector/0.1.0/partitions-2slot.bin",
+      "selector": "selector/0.1.0/selector.bin"
+    },
+    {
+      "id": "3slot",
+      "name": "3 slots of 4 MiB",
+      "slots": 3,
+      "slotSize": 4194304,
+      "bootloader": "selector/0.1.0/bootloader.bin",
+      "partitionTable": "selector/0.1.0/partitions-3slot.bin",
+      "selector": "selector/0.1.0/selector.bin"
+    },
+    {
+      "id": "5slot",
+      "name": "5 slots of 2.4 MiB (small firmwares only)",
+      "slots": 5,
+      "slotSize": 2555904,
+      "bootloader": "selector/0.1.0/bootloader.bin",
+      "partitionTable": "selector/0.1.0/partitions-5slot.bin",
+      "selector": "selector/0.1.0/selector.bin"
+    }
+  ]
+}

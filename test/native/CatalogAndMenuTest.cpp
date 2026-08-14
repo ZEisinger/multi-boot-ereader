@@ -209,3 +209,29 @@ TEST(AutoBootTimer, FiresAfterTheTimeoutAndIsCancelledByInput) {
     EXPECT_FALSE(disabled.enabled());
     EXPECT_FALSE(disabled.update(1000000, false));
 }
+
+// The web installer writes the same blob from the browser, so both
+// implementations are pinned to one golden vector. The hex string below is
+// produced by `web/js/slotMetadata.js` and asserted there too.
+TEST(SlotMetadata, MatchesTheWebInstallerGoldenBlob) {
+    static const char kGolden[] =
+        "4d424d45544101020105010000000000000054524d4e4c0000000000000000000000000000000000000000000000000000"
+        "00000010000000010043726f7373506f696e7420312e352e3000000000000000000000000000000000b098540000005da6"
+        "34fb";
+
+    SlotMetadata metadata;
+    metadata.defaultSlot = 1;
+    metadata.bootTimeoutSeconds = 5;
+    metadata.oneShotBoot = true;
+    EXPECT_TRUE(metadata.setEntry({0, "TRMNL", 1048576, false}));
+    EXPECT_TRUE(metadata.setEntry({1, "CrossPoint 1.5.0", 5544112, false}));
+
+    const std::vector<uint8_t> blob = encodeSlotMetadata(metadata);
+    std::string hex;
+    static const char* kDigits = "0123456789abcdef";
+    for (const uint8_t byte : blob) {
+        hex.push_back(kDigits[byte >> 4]);
+        hex.push_back(kDigits[byte & 0x0f]);
+    }
+    EXPECT_EQ(hex, std::string(kGolden));
+}
