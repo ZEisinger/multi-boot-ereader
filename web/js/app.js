@@ -73,8 +73,14 @@ function renderSlots() {
   defaultSelect.innerHTML = '<option value="-1">Always ask</option>';
 
   state.slots.forEach((slot) => {
+    // Labels and names come out of device flash, so they are never interpolated
+    // into HTML: a guest firmware could otherwise plant a script in `mbmeta`.
     const row = document.createElement('tr');
-    row.innerHTML = `<td>${slot.label}</td><td>${slot.displayName}</td><td>${formatBytes(slot.size)}</td>`;
+    [slot.label, slot.displayName, formatBytes(slot.size)].forEach((value) => {
+      const cell = document.createElement('td');
+      cell.textContent = value;
+      row.appendChild(cell);
+    });
     body.appendChild(row);
 
     const option = document.createElement('option');
@@ -137,8 +143,13 @@ function renderReleases() {
     option.dataset.displayName = release.displayName;
     releaseSelect.appendChild(option);
   });
+  suggestNameFromRelease();
+}
+
+/** Fills the name field from the selected release, unless a file was uploaded. */
+function suggestNameFromRelease() {
   if (!state.customImage) {
-    el('display-name').value = releaseSelect.selectedOptions[0]?.dataset.displayName ?? '';
+    el('display-name').value = el('release').selectedOptions[0]?.dataset.displayName ?? '';
   }
 }
 
@@ -265,7 +276,9 @@ async function init() {
   el('backup').addEventListener('click', () => run('back up the flash', backup));
   el('restore').addEventListener('click', () => run('restore the flash', restore));
   el('firmware').addEventListener('change', renderReleases);
-  el('release').addEventListener('change', renderReleases);
+  // Rebuilding the option list here would reset the user's choice, so the
+  // release handler only refreshes the suggested name.
+  el('release').addEventListener('change', suggestNameFromRelease);
   el('custom-image').addEventListener('change', async (event) => {
     const file = event.target.files[0];
     state.customImage = file ? new Uint8Array(await file.arrayBuffer()) : null;
