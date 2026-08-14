@@ -1,0 +1,11 @@
+# Two 6 MiB firmware slots: the layout for full size builds such as
+# CrossPoint (5.3 MB in 1.5.0). This is the default layout.
+# Name,     Type, SubType,  Offset,     Size,       Flags
+nvs,       data, nvs,      0x9000,     0x5000,
+otadata,   data, ota,      0xe000,     0x2000,
+selector,  app,  factory,  0x10000,    0xf0000,
+mbmeta,    data, 0x40,     0x100000,   0x1000,
+spiffs,    data, spiffs,   0x101000,   0x260000,
+slot0,     app,  ota_0,    0x370000,   0x640000,
+slot1,     app,  ota_1,    0x9b0000,   0x640000,
+coredump,  data, coredump, 0xff0000,   0x10000,

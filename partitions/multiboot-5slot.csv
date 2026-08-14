@@ -1,0 +1,14 @@
+# Five ~2.4 MiB firmware slots for small firmwares (TRMNL, MicroSlate,
+# slim builds). Verify your image sizes before flashing this layout.
+# Name,     Type, SubType,  Offset,     Size,       Flags
+nvs,       data, nvs,      0x9000,     0x5000,
+otadata,   data, ota,      0xe000,     0x2000,
+selector,  app,  factory,  0x10000,    0xf0000,
+mbmeta,    data, 0x40,     0x100000,   0x1000,
+spiffs,    data, spiffs,   0x101000,   0x300000,
+slot0,     app,  ota_0,    0x410000,   0x260000,
+slot1,     app,  ota_1,    0x670000,   0x260000,
+slot2,     app,  ota_2,    0x8d0000,   0x260000,
+slot3,     app,  ota_3,    0xb30000,   0x260000,
+slot4,     app,  ota_4,    0xd90000,   0x260000,
+coredump,  data, coredump, 0xff0000,   0x10000,
