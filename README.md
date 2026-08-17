@@ -13,9 +13,10 @@ Please select the firmware you wish to use:
   TRMNL                       1.4.2 - 1.1 MB of 6.0 MB
 ```
 
-Unlike the two-way dual boot fork this project is built for **many** firmwares:
-the number of slots comes from the partition layout you install, and guest
-firmwares are written **unmodified**, exactly as their projects release them.
+The selector has two 6 MiB slots for full-size guest firmwares. Keep additional
+images on the SD card and stage one into an available slot from the boot menu.
+Guest firmwares are written **unmodified**, exactly as their projects release
+them.
 
 ## Repository layout
 
@@ -24,15 +25,17 @@ firmwares are written **unmodified**, exactly as their projects release them.
 | `lib/multiboot_core/` | Pure C++17 core: otadata encoding, partition table and app image parsing, slot metadata, menu model, 1bpp renderer. No Arduino dependencies, fully unit tested on the host. |
 | `src/` | ESP32 firmware: display, buttons, flash access and SD-card staging on top of the core. |
 | `test/native/` | Host unit tests for the core (CMake + CTest). |
-| `partitions/` | Generated multi-slot partition layouts (2, 3 and 5 slots). |
-| `tools/gen_partitions.py` | Generates and validates those layouts. |
+| `partitions/` | Generated two-slot partition layout. |
+| `tools/gen_partitions.py` | Generates and validates that layout. |
 | `web/` | The static web installer and its `node --test` suite. |
 | `docs/` | Architecture, boot flow, installation, testing and **limitations**. |
 
 ## Quick start
 
 Install the selector with the [web installer](web/) (Chromium based desktop
-browser, USB cable), then use the same page to put firmwares into slots.
+browser, USB cable), then use the same page to put firmwares into slots. To
+keep more images than the two slots hold, stage them under `/.firmware/` on an
+SD card and select one from the boot menu.
 
 > **Read [`docs/limitations.md`](docs/limitations.md) first.** Installing the
 > selector replaces the bootloader and the partition table, which erases the
@@ -44,7 +47,6 @@ browser, USB cable), then use the same page to put firmwares into slots.
 git clone --recurse-submodules https://github.com/ZEisinger/multi-boot-ereader
 cd multi-boot-ereader
 pio run -e selector            # boot selector, default 2 slot layout
-pio run -e selector_3slot      # 3 slots of 4 MiB
 ```
 
 ## Testing

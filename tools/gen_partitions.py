@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
-"""Generate and validate multi-boot partition layouts.
+"""Generate and validate the standard multi-boot partition layout.
 
-The Xteink X4 has 16 MB of flash, so the number of firmware slots is a trade off
-between slot size and slot count (see docs/limitations.md). This script writes
-the CSV layouts consumed by PlatformIO and can validate any layout for overlaps,
-alignment and flash overflow.
+The Xteink X4 has 16 MB of flash. The checked-in layout provides two 6 MiB
+firmware slots; additional firmwares can be staged on an SD card. This script
+writes the CSV layout consumed by PlatformIO and can validate any layout for
+overlaps, alignment and flash overflow.
 
 Examples
 --------
-    # regenerate the checked in layouts
+    # regenerate the checked-in layout
     python3 tools/gen_partitions.py --write
 
-    # validate every layout (also run in CI)
+    # validate the checked-in layout (also run in CI)
     python3 tools/gen_partitions.py --check partitions/*.csv
 
     # print a custom layout without writing it
@@ -172,20 +172,8 @@ LAYOUTS = {
     "multiboot-2slot.csv": (
         2,
         0x640000,
-        "# Two 6 MiB firmware slots: the layout for full size builds such as\n"
-        "# CrossPoint (5.3 MB in 1.5.0). This is the default layout.",
-    ),
-    "multiboot-3slot.csv": (
-        3,
-        0x400000,
-        "# Three 4 MiB firmware slots for medium sized firmwares.\n"
-        "# CrossPoint release builds do NOT fit here - check the image size first.",
-    ),
-    "multiboot-5slot.csv": (
-        5,
-        0x260000,
-        "# Five ~2.4 MiB firmware slots for small firmwares (TRMNL, MicroSlate,\n"
-        "# slim builds). Verify your image sizes before flashing this layout.",
+        "# Two 6 MiB firmware slots for full-size builds such as CrossPoint\n"
+        "# (5.3 MB in 1.5.0). Additional firmwares can be staged on an SD card.",
     ),
 }
 

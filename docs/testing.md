@@ -37,14 +37,14 @@ image readers, the catalog sanitiser and every install plan
 refusal cases: empty file, wrong magic, image larger than the slot, image for
 another chip, unknown slot.
 
-## Partition layouts
+## Partition layout
 
 ```sh
 python3 tools/gen_partitions.py --check partitions/*.csv
 ```
 
 Validates alignment, overlaps and flash overflow. CI additionally regenerates
-the layouts and fails if the checked-in files differ.
+the layout and fails if the checked-in file differs.
 
 ## Firmware build
 

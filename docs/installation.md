@@ -17,11 +17,8 @@ can be restored from the same page.
 
 ## 2. Install the boot selector
 
-1. Choose a layout:
-   - **2 slots of 6 MiB** (default) — fits two full size firmwares such as
-     CrossPoint.
-   - **3 slots of 4 MiB** — CrossPoint does not fit.
-   - **5 slots of ~2.4 MiB** — small firmwares only.
+1. The installer uses the fixed layout: **two 6 MiB slots**, large enough for
+   full-size firmwares such as CrossPoint.
 2. Press *Install boot selector*.
 
 The installer writes the bootloader (0x0), the partition table (0x8000), an
@@ -63,7 +60,9 @@ Put images on the card as:
 
 In the boot menu press *Back* to open the SD list, pick an image and confirm.
 The selector copies it into the first free slot that is big enough and adds it
-to the menu. This is how you keep more firmwares than fit in flash.
+to the menu. This is how you keep more firmwares than the two resident slots
+hold. To replace an occupied slot, install the staged image into that slot from
+the web installer.
 
 ## Recovery
 

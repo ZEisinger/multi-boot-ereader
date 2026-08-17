@@ -13,8 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        env: [selector, selector_3slot, selector_5slot]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -28,22 +26,22 @@ jobs:
           path: |
             ~/.platformio
             ~/.cache/pip
-          key: pio-${{ runner.os }}-${{ matrix.env }}-${{ hashFiles('platformio.ini') }}
+          key: pio-${{ runner.os }}-${{ hashFiles('platformio.ini') }}
       - name: Install PlatformIO
         run: pip install --upgrade platformio
-      - name: Build ${{ matrix.env }}
-        run: pio run -e ${{ matrix.env }}
-      - name: Package ${{ matrix.env }} binaries
+      - name: Build selector
+        run: pio run -e selector
+      - name: Package selector binaries
         run: |
-          mkdir -p artifacts/${{ matrix.env }}
-          cp .pio/build/${{ matrix.env }}/bootloader.bin artifacts/${{ matrix.env }}/
-          cp .pio/build/${{ matrix.env }}/partitions.bin artifacts/${{ matrix.env }}/
-          cp .pio/build/${{ matrix.env }}/firmware.bin artifacts/${{ matrix.env }}/
-      - name: Upload ${{ matrix.env }} artifacts
+          mkdir -p artifacts/selector
+          cp .pio/build/selector/bootloader.bin artifacts/selector/
+          cp .pio/build/selector/partitions.bin artifacts/selector/
+          cp .pio/build/selector/firmware.bin artifacts/selector/
+      - name: Upload selector artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.env }}-binaries
-          path: artifacts/${{ matrix.env }}
+          name: selector-binaries
+          path: artifacts/selector
 
   web-installer:
     name: Package web installer
