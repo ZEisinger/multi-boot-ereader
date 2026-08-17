@@ -68,12 +68,16 @@ jobs:
     environment:
       name: github-pages
     steps:
-      - uses: actions/checkout@v4
+      - name: Download web installer artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: web-installer
+          path: web-installer
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: web
+          path: web-installer/web
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
