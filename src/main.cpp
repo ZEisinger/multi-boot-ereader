@@ -135,7 +135,7 @@ void drawSdLibrary() {
                               firmware.usable, false});
     }
     if (view.items.empty()) {
-        view.items.push_back({"No firmware found on the SD card", "Expected /firmware/<name>/firmware.bin", false,
+        view.items.push_back({"No firmware found on the SD card", "Expected /.firmware/<name>/firmware.bin", false,
                               false});
     }
     Canvas target = canvas();

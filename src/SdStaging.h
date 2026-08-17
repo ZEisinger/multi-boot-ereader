@@ -17,7 +17,7 @@ namespace sdstaging {
 /// Mounts the SD card. Returns false when no card is present.
 bool begin();
 
-/// Lists `/firmware/<name>/firmware.bin` entries on the card.
+/// Lists `/.firmware/<name>/firmware.bin` entries on the card.
 std::vector<multiboot::SdFirmware> scanLibrary(uint32_t maxImageSize);
 
 /// Copies an image from the SD card into `slot`, reporting progress in percent.

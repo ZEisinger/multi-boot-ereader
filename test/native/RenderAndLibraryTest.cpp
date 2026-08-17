@@ -161,7 +161,7 @@ TEST(SdFirmwareLibrary, ListsUsableImagesAndExplainsTheRest) {
     const auto library = buildSdLibrary(candidates, 6u * 1024u * 1024u);
     EXPECT_EQ(library.size(), static_cast<size_t>(4));
     EXPECT_EQ(library[0].displayName, std::string("Crosspoint 1.5.0"));
-    EXPECT_EQ(library[0].imagePath, std::string("/firmware/crosspoint-1.5.0/firmware.bin"));
+    EXPECT_EQ(library[0].imagePath, std::string("/.firmware/crosspoint-1.5.0/firmware.bin"));
     EXPECT_TRUE(library[0].usable);
 
     for (const auto& entry : library) {

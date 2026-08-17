@@ -8,12 +8,12 @@
 namespace multiboot {
 
 /// Directory on the SD card that holds the firmware library.
-constexpr const char* kSdLibraryRoot = "/firmware";
+constexpr const char* kSdLibraryRoot = "/.firmware";
 /// File names looked up inside each firmware directory.
 constexpr const char* kSdImageFileName = "firmware.bin";
 constexpr const char* kSdNameFileName = "name.txt";
 
-/// Raw scan result for one directory below `/firmware`, produced by the
+/// Raw scan result for one directory below `/.firmware`, produced by the
 /// platform specific SD card code.
 struct SdFirmwareCandidate {
     /// Directory name, e.g. "crosspoint-1.5.0".
@@ -30,7 +30,7 @@ struct SdFirmwareCandidate {
 
 /// An entry of the SD card firmware library that the boot menu can offer.
 struct SdFirmware {
-    /// Full path of the image, e.g. "/firmware/crosspoint-1.5.0/firmware.bin".
+    /// Full path of the image, e.g. "/.firmware/crosspoint-1.5.0/firmware.bin".
     std::string imagePath;
     std::string directoryName;
     std::string displayName;

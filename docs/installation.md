@@ -4,13 +4,14 @@
 
 - An Xteink X4 (ESP32-C3, 16 MB flash).
 - A USB data cable.
-- Chrome, Edge or Opera on a desktop (Web Serial); Firefox and Safari cannot
-  flash.
+- Chrome, Edge or Opera on a desktop (Web Serial). Firefox and Safari cannot
+  flash, and iOS/Android are not supported.
 
 ## 1. Back up first
 
 Installing the boot selector replaces the bootloader and the partition table and
-therefore **erases everything on the device**. Open the installer, connect the
+therefore erases the device flash contents (settings, credentials and other app
+data in flash). SD-card files are not touched. Open the installer, connect the
 device and press *Download a full backup*. You get a 16 MB raw flash image that
 can be restored from the same page.
 
@@ -40,6 +41,9 @@ For each firmware:
 The image is written unmodified; only the separate `mbmeta` partition records
 the name, the size and your boot preferences.
 
+After installing a guest firmware, disable that firmware's built-in auto-update.
+Guest OTA updates can overwrite other multi-boot slots.
+
 ## 4. Boot behaviour (optional)
 
 - **Boot this slot automatically after N seconds** — the menu still appears, any
@@ -52,9 +56,9 @@ the name, the size and your boot preferences.
 Put images on the card as:
 
 ```
-/firmware/crosspoint-1-5-0/firmware.bin
-/firmware/crosspoint-1-5-0/name.txt        (optional, one line, the display name)
-/firmware/trmnl/firmware.bin
+/.firmware/crosspoint-1-5-0/firmware.bin
+/.firmware/crosspoint-1-5-0/name.txt        (optional, one line, the display name)
+/.firmware/trmnl/firmware.bin
 ```
 
 In the boot menu press *Back* to open the SD list, pick an image and confirm.

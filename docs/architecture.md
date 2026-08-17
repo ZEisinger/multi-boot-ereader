@@ -37,7 +37,7 @@ bytes or structs, which is what makes the host test suite possible.
 | --- | --- |
 | `BoardConfig.h` | Panel pins, `mbmeta` label/subtype, long press threshold. |
 | `FlashSlots.{h,cpp}` | `esp_partition` access: read the table, probe slots, read/write `mbmeta`, write otadata, stream an image into a slot. |
-| `SdStaging.{h,cpp}` | Mount the SD card, list `/firmware/<name>/firmware.bin`, copy one into a slot. |
+| `SdStaging.{h,cpp}` | Mount the SD card, list `/.firmware/<name>/firmware.bin`, copy one into a slot. |
 | `main.cpp` | Screens, input handling, redraw policy, `esp_restart()`. |
 
 ## `web`

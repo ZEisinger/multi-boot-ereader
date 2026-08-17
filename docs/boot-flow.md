@@ -66,7 +66,7 @@ Two paths, both writing the guest image byte for byte:
 
 - **Web installer:** `planSlotInstall()` writes the image to the slot offset and
   an updated `mbmeta` blob with the name you typed.
-- **From the SD card:** the selector lists `/firmware/<name>/firmware.bin`,
+- **From the SD card:** the selector lists `/.firmware/<name>/firmware.bin`,
   copies the file into the first free slot that is big enough in 4 KiB chunks
   and records the folder name (or the contents of `name.txt`) as the display
   name.
