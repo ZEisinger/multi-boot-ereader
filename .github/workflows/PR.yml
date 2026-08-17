@@ -6,8 +6,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 jobs:
   firmware-artifacts:
@@ -61,7 +59,12 @@ jobs:
   deploy-web-installer:
     name: Deploy web installer to GitHub Pages
     if: github.event_name == 'workflow_dispatch'
+    needs: web-installer
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+      contents: read
     environment:
       name: github-pages
     steps:
