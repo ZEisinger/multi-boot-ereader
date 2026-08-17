@@ -53,7 +53,10 @@ pio run -e selector
 ```
 
 CI builds the default environment. Note that `custom_sdkconfig` forces a full
-rebuild of the Arduino core the first time, which takes a while.
+rebuild of the Arduino core the first time, which takes a while. It also
+compiles managed components this firmware never uses, so a few unrelated
+`CONFIG_FMB_*` (Modbus) entries are pinned in `platformio.ini` purely to keep
+those components compiling.
 
 ## What is not covered
 
