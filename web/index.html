@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Multi-boot installer for the Xteink X4</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Multi-boot e-reader installer</h1>
+      <p>
+        Install the boot selector, put firmwares into slots and back up your device. Needs Chrome/Edge/Opera on a
+        desktop (Web Serial) and a USB cable; Firefox, Safari, iOS and Android are not supported.
+      </p>
+      <div class="toolbar">
+        <button id="connect" type="button">Connect device</button>
+        <button id="disconnect" type="button" disabled>Disconnect</button>
+        <span id="status" role="status">Not connected</span>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>1. Install the boot selector</h2>
+        <p>
+          Writes the bootloader, the multi-boot partition table and the selector itself.
+          <strong>This erases everything on the device</strong>, so take a backup first.
+        </p>
+        <label for="layout">Layout</label>
+        <select id="layout"></select>
+        <button id="install-base" type="button" disabled>Install boot selector</button>
+      </section>
+
+      <section>
+        <h2>2. Install a firmware into a slot</h2>
+        <p>
+          The image is written exactly as released; only its name is stored separately. Disable auto-update in guest
+          firmwares to avoid them overwriting another slot.
+        </p>
+        <label for="firmware">Firmware</label>
+        <select id="firmware"></select>
+        <label for="release">Version</label>
+        <select id="release"></select>
+        <label for="custom-image">…or upload a firmware.bin</label>
+        <input id="custom-image" type="file" accept=".bin" />
+        <label for="slot">Slot</label>
+        <select id="slot" disabled></select>
+        <label for="display-name">Name shown in the boot menu</label>
+        <input id="display-name" type="text" maxlength="31" placeholder="CrossPoint 1.5.0" />
+        <button id="install-slot" type="button" disabled>Install into slot</button>
+      </section>
+
+      <section>
+        <h2>3. Boot behaviour</h2>
+        <label for="default-slot">Boot this slot automatically</label>
+        <select id="default-slot" disabled></select>
+        <label for="timeout">After (seconds, 0 = always ask)</label>
+        <input id="timeout" type="number" min="0" max="255" value="0" />
+        <label class="checkbox">
+          <input id="one-shot" type="checkbox" checked />
+          Return to the boot menu on the next reset (one-shot boot)
+        </label>
+        <button id="save-boot" type="button" disabled>Save boot options</button>
+        <button id="clear-selection" type="button" disabled>Back to the boot menu now</button>
+      </section>
+
+      <section>
+        <h2>4. Backup and restore</h2>
+        <p>A backup is a raw 16 MB image of the whole flash, including settings and other data stored in flash.</p>
+        <button id="backup" type="button" disabled>Download a full backup</button>
+        <label for="restore-file">Restore an image</label>
+        <input id="restore-file" type="file" accept=".bin" />
+        <button id="restore" type="button" disabled>Restore</button>
+      </section>
+
+      <section>
+        <h2>Device</h2>
+        <table id="slots"><tbody></tbody></table>
+      </section>
+
+      <section>
+        <h2>Log</h2>
+        <pre id="log" aria-live="polite"></pre>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        Read the <a href="https://github.com/ZEisinger/multi-boot-ereader/blob/main/docs/limitations.md">limitations</a>
+        before you start. Source on
+        <a href="https://github.com/ZEisinger/multi-boot-ereader">GitHub</a>.
+      </p>
+    </footer>
+
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>

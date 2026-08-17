@@ -1,0 +1,15 @@
+{
+  "$comment": "Boot selector builds. `url` entries are filled in by the release workflow; relative paths are resolved against this file's directory.",
+  "version": "0.1.0",
+  "layouts": [
+    {
+      "id": "2slot",
+      "name": "2 slots of 6 MiB (default, fits two full size firmwares)",
+      "slots": 2,
+      "slotSize": 6291456,
+      "bootloader": "selector/0.1.0/bootloader.bin",
+      "partitionTable": "selector/0.1.0/partitions-2slot.bin",
+      "selector": "selector/0.1.0/selector.bin"
+    }
+  ]
+}

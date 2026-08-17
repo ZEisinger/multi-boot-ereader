@@ -1,0 +1,81 @@
+name: PR Manual Test Build
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  firmware-artifacts:
+    name: Build firmware artifacts
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Cache PlatformIO
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.platformio
+            ~/.cache/pip
+          key: pio-${{ runner.os }}-${{ hashFiles('platformio.ini') }}
+      - name: Install PlatformIO
+        run: pip install --upgrade platformio
+      - name: Build selector
+        run: pio run -e selector
+      - name: Package selector binaries
+        run: |
+          mkdir -p artifacts/selector
+          cp .pio/build/selector/bootloader.bin artifacts/selector/
+          cp .pio/build/selector/partitions.bin artifacts/selector/
+          cp .pio/build/selector/firmware.bin artifacts/selector/
+      - name: Upload selector artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: selector-binaries
+          path: artifacts/selector
+
+  web-installer:
+    name: Package web installer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Upload web installer files
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-installer
+          path: web
+
+  deploy-web-installer:
+    name: Deploy web installer to GitHub Pages
+    if: github.event_name == 'workflow_dispatch'
+    needs: web-installer
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+      contents: read
+    environment:
+      name: github-pages
+    steps:
+      - name: Download web installer artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: web-installer
+          path: web-installer
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: web-installer/web
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4

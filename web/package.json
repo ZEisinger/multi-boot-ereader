@@ -1,0 +1,11 @@
+{
+  "name": "multi-boot-ereader-web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Static web installer for the multi-boot e-reader firmware",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  }
+}
